@@ -111,4 +111,13 @@ CLK을 넣어주고, 타이밍에 맞춰 SI 핀을 LOW -> HOW로 바꾸어주면
 ![pid](img/pid.png)
 
 ![pid](img/hill.gif)
-> 
+
+
+
+# 4. 결과영상
+
+
+[![대회](img/com.png)](https://youtu.be/O_istmzbfyI)
+
+> 사진을 클릭하면 동영상이 재생됩니다(유튜브)
+
