@@ -6,6 +6,8 @@
 ## 4.[SLAM](study/slam/README.md)
 ## 5.[ROS](study/ros/README.md)
 ## 6.[Embedded](study/embedded/README.md)
+## 7. [etc](study/etc/README.md)
+
 
 # 프로젝트
 
