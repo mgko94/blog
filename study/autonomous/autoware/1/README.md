@@ -223,6 +223,47 @@ Image 파일을 만들어 컨테이너에 ROS, Cuda, 종속라이브러리를 �
         sudo ./run.sh -r melodic -s
 
 
+7. runtime_manager 설정파일 수정
+
+find로 run 파일 탐색후 편집
+
+        cd ~/Autoware
+        find . -name run
+
+        edit 목록1
+        edit 목록2
+        # 목록은 find 결과 
+
+        cp ~/shared_dir/default.rviz ~/.rviz;
+
+        rosrun runtime_manager 앞에다가 위의 cp 명령어를 붙여넣기해준다(목록1,목록2)
+
+
+8. Autoware 패키지 수정
+
+        cp ~/shared_dir/src/autoware/utilities/runtime_manager/scripts/run ~/Autoware/src/autoware/utilities/runtime_manager/scripts/run
+        cd ~/Autoware/build/runtime_manager
+        make install 
+
+        cp ~/shared_dir/src/autoware/core_perception/lidar_localizer/nodes/ndt_matching/ndt_matching.cpp ~/Autoware/src/autoware/core_perception/lidar_localizer/nodes/ndt_matching/ndt_matching.cpp
+        cd ~/Autoware/build/lidar_localizer 
+        make install 
+
+
+        cp ~/shared_dir/src/autoware/core_perception/lidar_euclidean_cluster_detect/launch/lidar_euclidean_cluster_detect.launch ~/Autoware/src/autoware/core_perception/lidar_euclidean_cluster_detect/launch/lidar_euclidean_cluster_detect.launch 
+        cd ~/Autoware/build/lidar_euclidean_cluster_detect 
+        make install
+
+        cd 
+        mkdir autoware_openplanner_logs
+        cd autoware_openplanner_logs && mkdir SimulationData
+        cp ~/shared_dir/autoware_openplanner_logs/SimulationData/EgoCar.csv  ~/autoware_openplanner_logs/SimulationData/
+
+
+9. autoware 실행
+
+        cd ~/Autoware
+        roslaunch runtime_manager runtime_manager.launch
 
 
 
