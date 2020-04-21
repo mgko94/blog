@@ -57,6 +57,13 @@ Host에 직접 Nvidia 그래픽 드라이버, ROS, Cuda, 종속라이브러리 �
         rosdep update
     > http://wiki.ros.org/melodic/Installation/Ubuntu
     
+    기타 종속 패키지 설치
+
+        sudo apt update
+        sudo apt install -y python-catkin-pkg python-rosdep ros-melodic-catkin 
+        sudo apt install -y python3-pip python3-colcon-common-extensions python3-setuptools python3-vcstool 
+        pip3 install -U setuptools
+
 
 3. 아이젠 3.3.7 버전 설치
 
