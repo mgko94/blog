@@ -93,7 +93,7 @@ Host에 직접 Nvidia 그래픽 드라이버, ROS, Cuda, 종속라이브러리 �
     >https://gitlab.com/autowarefoundation/autoware.ai/utilities/-/merge_requests/25/diffs 
 
 
-    runtime_manager, ndt_matching, lidar_euclidean_cluster_detect 소스코드를 수정함
+    runtime_manager, ndt_matching, lidar_euclidean_cluster_detect 소스코드 수정 및 다른 설정 파일 복사.
 
 
     
