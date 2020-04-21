@@ -225,7 +225,7 @@ Image 파일을 만들어 컨테이너에 ROS, Cuda, 종속라이브러리를 �
 
 7. runtime_manager 설정파일 수정
 
-find로 run 파일 탐색후 편집
+    find로 run 파일 탐색후 편집
 
         cd ~/Autoware
         find . -name run
