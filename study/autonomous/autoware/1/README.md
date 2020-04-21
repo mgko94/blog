@@ -132,3 +132,97 @@ Host에 직접 Nvidia 그래픽 드라이버, ROS, Cuda, 종속라이브러리 �
 Image 파일을 만들어 컨테이너에 ROS, Cuda, 종속라이브러리를 설치를 해야 하지만 Image 파일은 Autoware에서 제공하기 때문에 다운받아서 바로 사용할 수 있다. 다만 Nvidia 그래픽 드라이버는 호스트 설치한다. Docker-nvidia를 통해 Host에 있는 그래픽카드를 컨테이너에서 잡아서 사용할 수 있다.
 
 
+
+1. autoware 유저 생성
+
+    다음과 같이 변경해줌 원래 user: Rubicom이라고 한다면 autoware 유저랑 pid 번호를 바꿔줌 
+    autoware 유저번호를 1000번으로 바꿔줘야함.
+
+        sudo adduser autoware  
+        sudo edit /etc/passwd
+        
+        ##다음과 같이 편집##
+        rubicom:x:1001:1001:Rubicom,,,:/home/rubicom:/bin/bash 
+        autoware:x:1000:1000:Autoware,,,:/home/autoware:/bin/bash
+
+
+
+
+    group도 에디터를 열어서 수정해줌. autoware에게 sudo 권한을 준다.  
+
+
+        sudo gedit /etc/group 
+
+        ##다음과 같이 편집##
+        sudo:x:27:autoware # add ‘autoware’ into group ‘sudo’ 
+        rubicom:x:1001 # previously 1000 
+        autoware:x:1000 # previously 1001
+
+
+    해당 폴더의 소유권을 바꿔줌
+
+        sudo chown –R 1000:1000 /home/autoware
+        sudo chown –R 1001:1001 /home/rubicom 
+
+    autoware 유저로 자동로그인 설정을 해준다.
+
+        sudo gedit /etc/gdm3/custom.conf 
+
+
+
+2. docker ce 설치
+   
+    도커 명령어 및 사용법 [Link](study\docker\README.md)
+
+        sudo apt-get update # update package lists 
+        sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - 
+        sudo apt-key fingerprint 0EBFCD88 
+        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" 
+        sudo apt-get update 
+        sudo apt-get install docker-ce 
+        sudo docker run hello-world
+    >https://gitlab.com/autowarefoundation/autoware.ai/autoware/-/wikis/docker-installation
+
+
+3. nvidia 그래픽카드 설치
+   
+        sudo lshw -C display
+        ubuntu-drivers devices
+        sudo add-apt-repository ppa:graphics-drivers/ppa
+        sudo apt update
+        sudo ubuntu-drivers autoinstall
+        sudo reboot
+
+
+4. docker-nvidia 설치
+   
+        curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo aptkey add -
+        distribution=$(. /etc/os-release;echo $ID$VERSION_ID) 
+        curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidiadocker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list 
+        sudo apt-get update 
+
+        curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo aptkey add  -
+        sudo apt-get install nvidia-docker2 
+        sudo pkill -SIGHUP dockerd 
+        docker run --runtime=nvidia --rm nvidia/cuda nvidia-smi
+    >https://github.com/NVIDIA/nvidia-docker
+
+
+5. 공유파일 설정
+
+        cp –r target_dir ~/shared_dir  
+        # target_dir이 복사할 대상 : 제공받은 폴더경로를 적어주면된다. 
+        cd ~/shared_dir && sudo chown -R $(id -u):$(id -g) * 
+
+
+6. autoware docker 이미지 생성 후 컨테이너 실행
+
+        cd ~ && git clone https://gitlab.com/autowarefoundation/autoware.ai/docker.git
+        cd ~/docker/generic
+        sudo ./run.sh -r melodic -s
+
+
+
+
+
