@@ -14,4 +14,3 @@
 ## 1.[한양대 지능형 모형차 대회](projects/smcc/README.md)
 ## 2.[자율주행 서빙로봇](projects/servingRobot/README.md)
 ## 3.[국제 대학생 창작 자동차 경진대회](projects/autonomousCompetition/README.md)
-

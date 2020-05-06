@@ -1,10 +1,10 @@
 # 로그파일 실행
 
-Autoware 내에 waypoint_follower 시뮬레이터를 이용해서 Motion Planning, Mission Planning의 알고리즘을 테스트할 수 있다. op_global_planner를 실행해야 하기 때문에 벡터맵이 필요하다.
+실제 로그파일을 이용해서 Autoware의 알고리즘을 실행할 수 있다. 로그파일은 GNSS, Lidar 두 개의 토픽만 있어도 실행가능하다. 
 
 
 
-## 가) 시뮬레이션 실행방법
+## 가) 로그 파일 실행방법
 
 1. autoware 실행
 
@@ -40,6 +40,5 @@ Autoware 내에 waypoint_follower 시뮬레이터를 이용해서 Motion Plannin
     - pure_puresuit : 최종 경로(/final_waypoints), 위치(/current_pose), 속도(/current_velocity), 좌표계(tf)를 받아서 제어값(/ctrl_cmd, /twist_raw ) 계산
     - twist_filter : 계산결과를 twist_gate 노드를 거쳐서 실제 제어 값을 전달
 
-    - wf_simulator : 제어값(/ctrl_cmd)을 받아서 vehicle_status 메시지를 만들어서 시뮬레이션기능 구현
-
+  
 

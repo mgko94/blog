@@ -103,7 +103,7 @@ Host에 직접 Nvidia 그래픽 드라이버, ROS, Cuda, 종속라이브러리 �
    
    
 
-    runtime_manager, ndt_matching, lidar_euclidean_cluster_detect 소스코드 수정 및 다른 설정 파일 복사.
+    runtime_manager, ndt_matching, lidar_euclidean_cluster_detect 소스코드 수정 및 다른 설정 파일 복사. 패키지의 특정 노드 파일을 수정 후 make install을 하면 코드 수정이 가능
 
 
     
