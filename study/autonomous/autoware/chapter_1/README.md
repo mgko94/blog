@@ -90,7 +90,7 @@ Host에 직접 Nvidia 그래픽 드라이버, ROS, Cuda, 종속라이브러리 �
         colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release #without cuda
 
 
-5. Autoware 패키지 수정
+5. Autoware runtime manager gui 문제 해결
 
     ROS Melodic 버전에서 Runtime manager Gui 문제가 발생 runtime_manager_dialog.py, rtmgr.py파일 수정이 필요함 아래링크보고 수정
 
@@ -98,44 +98,68 @@ Host에 직접 Nvidia 그래픽 드라이버, ROS, Cuda, 종속라이브러리 �
         $ gedit ~/Autoware/src/autoware/utilities/runtime_manager/scripts/rtmgr.py 
         
         $ gedit ~/Autoware/src/autoware/utilities/runtime_manager/scripts/runtime_manager_dialog.py  
+
+        변경완료 후
+
+        $ cd ~/Autoware/build/runtime_manager
+        $ make install
+        # make install 했는데도 gui 에러가 난다면 make install 한번 더하면 해결됨
         
     > https://gitlab.com/autowarefoundation/autoware.ai/utilities/-/merge_requests/25/diffs  
    
    
+6. 세미나 자료이용시 다음과 같이 수정(선택)
+  
+    세미나 자료에 있는 vector map, pcd, bag 데이터를 사용하기 위해서 코드를 수정해 준다. runtime_manager, ndt_matching, lidar_euclidean_cluster_detect 소스코드 수정 및 다른 설정 파일 복사. 패키지의 특정 노드 파일을 수정 후 make install을 하면 코드 수정이 가능. 
 
-    runtime_manager, ndt_matching, lidar_euclidean_cluster_detect 소스코드 수정 및 다른 설정 파일 복사. 패키지의 특정 노드 파일을 수정 후 make install을 하면 코드 수정이 가능
+    수정이유
+
+    - runtime_manager : 세미나 자료에 맞는 rviz 세팅사용(구버전)
+
+    - ndt_matching : ndt_matching 파라미터 수정 (K-CITY에 맞게)
+    
+    - lidar_euclidean_cluster_detect : (?)
+
+
 
 
     
-        cp ~/shared_dir/src/autoware/utilities/runtime_manager/scripts/run ~/Autoware/src/autoware/utilities/runtime_manager/scripts/run
-        cd ~/Autoware/build/runtime_manager
-        make install 
+            cp ~/shared_dir/src/autoware/utilities/runtime_manager/scripts/run ~/Autoware/src/autoware/utilities/runtime_manager/scripts/run
+            cd ~/Autoware/build/runtime_manager
+            make install 
 
-        cp ~/shared_dir/src/autoware/core_perception/lidar_localizer/nodes/ndt_matching/ndt_matching.cpp ~/Autoware/src/autoware/core_perception/lidar_localizer/nodes/ndt_matching/ndt_matching.cpp
-        cd ~/Autoware/build/lidar_localizer 
-        make install 
+            cp ~/shared_dir/src/autoware/core_perception/lidar_localizer/nodes/ndt_matching/ndt_matching.cpp ~/Autoware/src/autoware/core_perception/lidar_localizer/nodes/ndt_matching/ndt_matching.cpp
+            cd ~/Autoware/build/lidar_localizer 
+            make install 
 
 
-        cp ~/shared_dir/src/autoware/core_perception/lidar_euclidean_cluster_detect/launch/lidar_euclidean_cluster_detect.launch ~/Autoware/src/autoware/core_perception/lidar_euclidean_cluster_detect/launch/lidar_euclidean_cluster_detect.launch 
-        cd ~/Autoware/build/lidar_euclidean_cluster_detect 
-        make install
+            cp ~/shared_dir/src/autoware/core_perception/lidar_euclidean_cluster_detect/launch/lidar_euclidean_cluster_detect.launch ~/Autoware/src/autoware/core_perception/lidar_euclidean_cluster_detect/launch/lidar_euclidean_cluster_detect.launch 
+            cd ~/Autoware/build/lidar_euclidean_cluster_detect 
+            make install
 
-        cd 
-        mkdir autoware_openplanner_logs
-        cd autoware_openplanner_logs && mkdir SimulationData
-        cp ~/shared_dir/autoware_openplanner_logs/SimulationData/EgoCar.csv  ~/autoware_openplanner_logs/SimulationData/
+            cd 
+            mkdir autoware_openplanner_logs
+            cd autoware_openplanner_logs && mkdir SimulationData
+            cp ~/shared_dir/autoware_openplanner_logs/SimulationData/EgoCar.csv  ~/autoware_openplanner_logs/SimulationData/
 
-        cp -rf ~/shared_dir/default.rviz ~/.rviz/default.rviz 
+            cp -rf ~/shared_dir/default.rviz ~/.rviz/default.rviz 
+
+
+        > 유저이름이 autoware 이여야 한다. 다르다면 자신의 유저이름에 맞게 바꿔서 명령어를 입력
+
+
+7. Autoware 환경설정
+
+
         echo 'source /home/autoware/Autoware/install/setup.bash' >> ~/.bashrc
         source ~/.bashrc
 
-    > 유저이름이 autoware 이여야 한다. 다르다면 자신의 유저이름에 맞게 바꿔서 명령어를 입력
-
-
-6. Autoware 실행
-
+8. Autoware 실행
+        
         cd ~/Autoware
         roslaunch runtime_manager runtime_manager.launch
+
+
 
 ## 나) Docker의 컨테이너에 개발환경 구성
 
