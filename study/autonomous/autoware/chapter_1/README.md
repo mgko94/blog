@@ -103,7 +103,6 @@ Host에 직접 Nvidia 그래픽 드라이버, ROS, Cuda, 종속라이브러리 �
 
         $ cd ~/Autoware/build/runtime_manager
         $ make install
-        # make install 했는데도 gui 에러가 난다면 make install 한번 더하면 해결됨
         
     > https://gitlab.com/autowarefoundation/autoware.ai/utilities/-/merge_requests/25/diffs  
    
